@@ -2,7 +2,7 @@
 
 set -e
 
-git clone https://github.com/anhvuk13/VulDetImp code
+git clone https://github.com/uit-anhvuk13/VulDetImp code
 cd code
 mkdir -p input output
 git clone https://github.com/leontsui1987/VulDetector
