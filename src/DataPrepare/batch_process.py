@@ -103,8 +103,8 @@ def main(app_dir):
                 thread.start()    
         for thread in threads:
             thread.join()    
-    #create_threads([(app_dir, os.listdir(app_dir), config_cmd, CFG_CMD)])
-    #create_threads([(app_dir, os.listdir(app_dir), make_cmd, CFG_CMD)])
+    create_threads([(app_dir, os.listdir(app_dir), config_cmd, CFG_CMD)])
+    create_threads([(app_dir, os.listdir(app_dir), make_cmd, CFG_CMD)])
     create_threads([(app_dir, os.listdir(app_dir), graph_cmd, GRAPH_CMD), (app_dir, os.listdir(app_dir), small_func_cmd, SMALL_FUNC_CMD)])
     print 'Finish'
     print failed_versions
