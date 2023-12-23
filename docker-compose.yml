@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  llvm-clang:
+  vuldetector:
     image: vuldetector
     container_name: vuldetector
     hostname: vuldetector
