@@ -36,7 +36,8 @@ RUN wget https://releases.llvm.org/6.0.1/llvm-6.0.1.src.tar.xz && \
     cd llvm/build && \
     cmake -DLLVM_ENABLE_PROJECTS=clang -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" .. && \
     make && \
-    make install
+    make install && \
+    rm -rf /tmp/build /tmp/clang.patch
 
 # no longer need python3
 RUN apt install -y \
