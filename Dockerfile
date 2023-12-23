@@ -16,7 +16,8 @@ RUN apt update && apt install -y \
         zip \
         zlib1g && \
     ln -sf /usr/bin/python3 /usr/bin/python && \
-    curl -o /usr/bin/neofetch https://raw.githubusercontent.com/dylanaraps/neofetch/master/neofetch
+    curl -o /usr/bin/neofetch https://raw.githubusercontent.com/dylanaraps/neofetch/master/neofetch && \
+    chmod +x /usr/bin/neofetch
 
 # build llvm/clang
 WORKDIR /tmp/build
@@ -27,10 +28,10 @@ RUN wget https://releases.llvm.org/6.0.1/llvm-6.0.1.src.tar.xz && \
     tar -xvf llvm-6.0.1.src.tar.xz && \
     rm cfe-6.0.1.src.tar.xz && \
     rm llvm-6.0.1.src.tar.xz && \
-    mv cfe-6.0.1.src.tar.xz clang && \
-    patch -p0 < /code/VulDetector/llvm_clang/clang.patch && \
-    mv llvm-6.0.1.src.tar.xz llvm && \
-    mv clang llvm/tools/ && \
+    mv cfe-6.0.1.src clang && \
+    patch -p0 < /tmp/clang.patch && \
+    mv llvm-6.0.1.src llvm && \
+    cp -r clang llvm/tools/ && \
     mkdir -p llvm/build && \
     cd llvm/build && \
     cmake -DLLVM_ENABLE_PROJECTS=clang -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" .. && \
