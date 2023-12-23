@@ -2,4 +2,4 @@
 
 set -e
 
-docker exec -it vuldetector bash $@
+docker exec -it vuldetapt bash $@

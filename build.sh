@@ -3,4 +3,4 @@
 set -e
 
 cd "$(dirname "$(realpath "$0")")"
-docker build --rm -t vuldetector .
+docker build --rm -t vuldetapt .

@@ -1,9 +1,9 @@
 version: '3.7'
 services:
-  vuldetector:
-    image: vuldetector
-    container_name: vuldetector
-    hostname: vuldetector
+  vuldetapt:
+    image: vuldetapt
+    container_name: vuldetapt
+    hostname: vuldetapt
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
