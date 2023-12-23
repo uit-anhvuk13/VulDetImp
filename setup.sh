@@ -13,3 +13,5 @@ wget https://ftp.openssl.org/source/old/1.0.2/openssl-1.0.2.tar.gz
 wget https://ftp.openssl.org/source/openssl-3.2.0.tar.gz
 tar -xvf openssl-1.0.2.tar.gz
 tar -xvf openssl-3.2.0.tar.gz
+rm openssl-1.0.2.tar.gz
+rm openssl-3.2.0.tar.gz
