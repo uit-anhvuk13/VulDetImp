@@ -1,7 +1,6 @@
 FROM ubuntu
 
 COPY bashrc /root/.bashrc
-RUN curl -o /usr/bin/neofetch https://raw.githubusercontent.com/dylanaraps/neofetch/master/neofetch
 
 # install needed packages
 RUN apt update && apt install -y \
@@ -16,7 +15,8 @@ RUN apt update && apt install -y \
         wget \
         zip \
         zlib1g && \
-    ln -sf /usr/bin/python3 /usr/bin/python
+    ln -sf /usr/bin/python3 /usr/bin/python && \
+    curl -o /usr/bin/neofetch https://raw.githubusercontent.com/dylanaraps/neofetch/master/neofetch
 
 # build llvm/clang
 WORKDIR /tmp/build
@@ -45,6 +45,6 @@ RUN apt install -y \
     ln -sf /usr/bin/pip2 /usr/bin/pip && \
     pip install scikit-learn matplotlib 
 
-wORKDIR /code
+WORKDIR /code
 
 CMD ["tail", "-f", "/dev/null"]
