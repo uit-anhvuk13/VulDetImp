@@ -42,10 +42,11 @@ RUN wget https://releases.llvm.org/6.0.1/llvm-6.0.1.src.tar.xz && \
 # no longer need python3
 RUN apt install -y \
         python2 \
+        python2-dev \
         python-pip && \
     ln -sf /usr/bin/python2 /usr/bin/python && \
     ln -sf /usr/bin/pip2 /usr/bin/pip && \
-    pip install scikit-learn matplotlib 
+    pip install scikit-learn matplotlib networkx hungarian
 
 WORKDIR /code
 
