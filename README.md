@@ -20,9 +20,9 @@ Run app:
 ./start.sh <options>
 ```
 
-Interact with the app:
+Interact with the app shell:
 ```bash
-./exec.sh <options>
+./exec.sh
 ```
 
 Stop app:
@@ -47,6 +47,9 @@ OPTIONS:
   --fun|-f     : Extract raw code for each function from sourcecode.
   --desc|-d    : Generate raw CFG description <ProjectDir>/tmp.log for a project.
   --cfg|-c     : Extract CFG description for each function from <ProjectDir>/tmp.log.
+  --affected|-a: Only extract the affected functions listed from /code/DATA/CVE_Fun.txt.
+                 Applied only when extracting APP/*.
+                 VUL/* & PAT/* are always extracted the functions that related to their CVE
 
 APP            : Extract data from a Software (/code/DATA/RAW/APP).
 VUL            : Extract data from Vulnerable code (/code/DATA/RAW/VUL).
