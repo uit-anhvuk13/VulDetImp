@@ -1,0 +1,17 @@
+CVE-2012-1165 mime_param_cmp#asn_mime.c
+CVE-2012-2110 asn1_d2i_read_bio#a_d2i_fp.c
+CVE-2013-4353 ssl3_take_mac#s3_both.c
+CVE-2013-6449 ssl_get_algorithm2#s3_lib.c
+CVE-2014-0195 dtls1_reassemble_fragment#d1_both.c
+CVE-2014-8176 dtls1_clear_queues#d1_lib.c
+CVE-2015-0285 ssl3_client_hello#s3_clnt.c
+CVE-2015-0290 ssl3_write_bytes#s3_pkt.c
+CVE-2015-1794 ssl3_get_key_exchange#s3_clnt.c
+CVE-2015-3197 get_client_hello#s2_srvr.c
+CVE-2016-0703 get_client_master_key#s2_srvr.c
+CVE-2016-0704 get_client_master_key#s2_srvr.c
+CVE-2016-0799 fmtstr#b_print.c
+CVE-2016-2109 asn1_d2i_read_bio#a_d2i_fp.c
+CVE-2016-2178 dsa_sign_setup#dsa_ossl.c
+CVE-2016-2842 doapr_outch#b_print.c
+CVE-2016-6305 ssl3_read_bytes#rec_layer_s3.c
