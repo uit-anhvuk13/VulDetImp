@@ -4,7 +4,10 @@ set -e
 
 [ $# -eq 0 ] && {
     if [ "$(hostname)" != vuldetector ]; then
+        cd "$(dirname "$(realpath "$0")")" > /dev/null
+        cp -r src/DataPrepare VulDetector/
         docker exec -it vuldetector bash
+        cd - > /dev/null
     else
         echo Command ./exec.sh without args is only able to be executed outside the container vuldetector
     fi
@@ -49,6 +52,9 @@ OPTIONS:
   --fun|-f     : Extract raw code for each function from sourcecode.
   --desc|-d    : Generate raw CFG description <ProjectDir>/tmp.log for a project.
   --cfg|-c     : Extract CFG description for each function from <ProjectDir>/tmp.log.
+  --affected|-a: Only extract the affected functions listed from /code/DATA/CVE_Fun.txt.
+                 Applied only when extracting APP/*.
+                 VUL/* & PAT/* are always extracted the functions that related to their CVE
 
 APP            : Extract data from a Software (/code/DATA/RAW/APP).
 VUL            : Extract data from Vulnerable code (/code/DATA/RAW/VUL).
@@ -66,6 +72,7 @@ EOF
     local ExtractDesc=0
     local ExtractCfg=0
     local ExtractFun=0
+    local AffectedOnly=0
     local Input=
 
     shift_args () {
@@ -91,6 +98,10 @@ EOF
                 ExtractCfg=1
                 shift_args 1 $@
                 ;;
+            --affected|-a)
+                AffectedOnly=1
+                shift_args 1 $@
+                ;;
             APP|VUL|PAT)
                 [ $# -lt 2 ] && help_n_exit
                 local Dir=/code/DATA/RAW/$1
@@ -113,7 +124,7 @@ EOF
     get_args $@
     [ $(($ExtractDesc|$ExtractCfg|$ExtractFun)) -eq 0 ] && help_n_exit
     [ "$Input" == "" ] && help_n_exit
-    python /code/VulDetector/DataPrepare/batch_process.py $ExtractDesc $ExtractCfg $ExtractFun $Input
+    python /code/VulDetector/DataPrepare/batch_process.py $ExtractDesc $ExtractCfg $ExtractFun $AffectedOnly $Input
 }
 
 ################################################################################
