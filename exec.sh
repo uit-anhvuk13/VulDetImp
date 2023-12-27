@@ -3,7 +3,11 @@
 set -e
 
 [ $# -eq 0 ] && {
-    docker exec -it vuldetector bash
+    if [ "$(hostname)" != vuldetector ]; then
+        docker exec -it vuldetector bash
+    else
+        echo Command ./exec.sh without args is only able to be executed outside the container vuldetector
+    fi
     exit 0
 }
 
