@@ -21,6 +21,7 @@ help_n_exit () {
 Usage: $0 COMMAND
 
 COMMANDS:
+  cve|e        : Download CVEs' affected app listed in DATA/CVE_App.txt
   prepare|p    : Extract function codes and CFGs from a program.
   locate|l     : Locate the sensitive lines.
   wfg|w        : Generate WFGs from CFGs.
@@ -115,7 +116,31 @@ EOF
 ################################################################################
 ################################################################################
 
+download_cve () {
+    local BaseDir='/code/DATA/RAW'
+    local Line
+    while IFS= read -r Line; do
+        local Software=$(echo $Line | cut -d\  -f1)
+        local Ver=$(echo $Line | cut -d\  -f2)
+        local Type=$(echo $Line | cut -d\  -f3)
+        local Dir=$(echo $Line | cut -d\  -f4)
+        if [ -d "$BaseDir/$Type/$Dir/$Software-$Ver" ]; then
+            echo Already Existed: $BaseDir/$Type/$Dir/$Software-$Ver
+        else
+            /code/src/tools/fetch_software.sh $Line
+        fi
+    done < /code/DATA/CVE_App.txt
+}
+
+################################################################################
+################################################################################
+################################################################################
+
 case $1 in
+    cve|e)
+        shift
+        download_cve
+        ;;
     prepare|p)
         shift
         prepare_data $@
