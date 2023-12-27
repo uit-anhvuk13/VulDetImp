@@ -120,11 +120,13 @@ download_cve () {
     local BaseDir='/code/DATA/RAW'
     local Line
     while IFS= read -r Line; do
+        [[ "$Line" == '#'* ]] && continue
         local Software=$(echo $Line | cut -d\  -f1)
         local Ver=$(echo $Line | cut -d\  -f2)
         local Type=$(echo $Line | cut -d\  -f3)
         local Dir=$(echo $Line | cut -d\  -f4)
-        if [ -d "$BaseDir/$Type/$Dir/$Software-$Ver" ]; then
+        local Dest="$BaseDir/$Type/$Dir/$Software-$Ver"
+        if [ -d "$Dest" ] && [ -z "$(find "$Dest" -maxdepth 0 -empty)" ]; then
             echo Already Existed: $BaseDir/$Type/$Dir/$Software-$Ver
         else
             /code/src/tools/fetch_software.sh $Line

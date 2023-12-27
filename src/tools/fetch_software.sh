@@ -51,17 +51,21 @@ get_args () {
                 download_file $Dest $FetchUrl $Ver
             else
                 FetchUrl="$FetchUrl/old"
-                VerDir=$(case $2 in
-                            0.*)
-                                echo 0.9.x
-                                ;;
-                            3.*)
-                                echo $2 | grep -o '[0-9]*\.[0-9]*' | head -n 1
-                                ;;
-                            *)
-                                echo $2 | sed 's/[a-zA-Z\_\-]//'
-                                ;;
-                        esac)
+                VerDir=$(if [[ "$2" == fips* ]]; then
+                            echo fips
+                         else
+                             case $(echo $2 | grep -o '\([0-9]*\.\)*[0-9]*' | head -n 1) in
+                                 0.*)
+                                     echo 0.9.x
+                                     ;;
+                                 3.*)
+                                     echo $2 | grep -o '[0-9]*\.[0-9]*' | head -n 1
+                                     ;;
+                                 *)
+                                     echo $2 | grep -o '\([0-9]*\.*\)*[0-9]*' | head -n 1
+                                     ;;
+                             esac
+                         fi)
                 FetchUrl="$FetchUrl/$VerDir"
                 if [ "$(curl "$FetchUrl/" 2> /dev/null | grep -o 'href="openssl.*\([0-9]*\.\)*[0-9].*\"' | sed 's/href=\|"//g' | grep $Ver)" != '' ]; then
                     download_file $Dest $FetchUrl $Ver
