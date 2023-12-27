@@ -71,11 +71,11 @@ def handle_one_version(versions, cmd, cmd_id=0):
             print "Success: Thread-%s, Cmd: %s" % (version_path, cmd)
         time.sleep(1)
 
-def main(extract_cfg_desc, extract_cfg, extract_fun, dirs):
+def main(extract_cfg_desc, extract_cfg, extract_fun, affected_only, dirs):
     config_cmd = "scan-build ./config"
     make_cmd = "scan-build -enable-checker debug.DumpCFG make 2> tmp.log"  # Generate CFG description using clang
-    cfg_cmd = "python /code/VulDetector/DataPrepare/extract_cfg_desc.py " # Generate CFGs for each function
-    func_cmd = "python /code/VulDetector/DataPrepare/extract_func.py " # Generate sourcecode for each function
+    cfg_cmd = "python /code/VulDetector/DataPrepare/extract_cfg_desc.py %s " % affected_only # Generate CFGs for each function
+    func_cmd = "python /code/VulDetector/DataPrepare/extract_func.py %s " % affected_only # Generate sourcecode for each function
 
     THREAD_CNT = 12
     def create_threads(cmds_args):
@@ -99,17 +99,16 @@ def main(extract_cfg_desc, extract_cfg, extract_fun, dirs):
         thread_cmds.append((list(dirs), cfg_cmd, CFG_CMD))
     if extract_fun == '1':
         thread_cmds.append((list(dirs), func_cmd, FUN_CMD))
-    print "DBG:", thread_cmds
     if thread_cmds:
         create_threads(thread_cmds)
 
 if __name__ == "__main__":
-    args = sys.argv[4:]
+    args = sys.argv[5:]
     apps = []
-    for app in sys.argv[4:]:
+    for app in sys.argv[5:]:
         apps.append(app)
     dirs = [os.path.join(dir, sub) for dir in apps for sub in os.listdir(dir) if os.path.isdir(os.path.join(dir, sub))]
-    main(sys.argv[1], sys.argv[2], sys.argv[3], dirs)
+    main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], dirs)
     print 'Finish'
     print failed_versions
     print len(failed_versions)
