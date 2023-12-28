@@ -35,7 +35,7 @@ with open(CVE_FUN_FILE, 'r') as File:
         [Cve, FunAndFile] = Line.split()
         [Fun, File] = FunAndFile.split('#')
         CVE_LIST[Cve] = (Fun, File)
-        AFFECTED_FUN_LIST.add((Fun, File))
+        AFFECTED_FUN_LIST.add(Fun)
 
 def safe_exec(cmd):
     try:
@@ -227,7 +227,7 @@ def traverse_log(log_file, output_dir):
             #print 'no file' 
             continue
 
-        if AFFECTED_ONLY and (func_name, file_name) not in AFFECTED_FUN_LIST:
+        if AFFECTED_ONLY and func_name not in AFFECTED_FUN_LIST:
             continue
 
         #file_name = re.findall(r"([\w\/]*\.[c|h]\:[0-9]*)", file_str)       # **.c or **.h file
