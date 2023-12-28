@@ -216,7 +216,7 @@ def traverse_log(log_file, output_dir):
             file_name = re.findall(r"([\w\/]*\.[c]\:[0-9]*)", file_str)        # NOTE: only handle **.c file, so that a large number functions are ignored!!
             if file_name:
                 file_name = file_name[0].split(":")[0]
-                file_name = "_".join(file_name.split('/'))
+                file_name = file_name.split('/')[-1]
                 if file_name[0] == '_':
                     file_name = file_name[1:]
                 break
